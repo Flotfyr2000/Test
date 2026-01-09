@@ -1,0 +1,43 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(gh auth:*)",
+      "Bash(git --version:*)",
+      "Bash(winget install:*)",
+      "Bash(git init:*)",
+      "Bash(git remote add:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(curl:*)",
+      "Bash(msiexec /i gh-installer.msi /quiet /qn /norestart)",
+      "Bash(timeout /t 5 /nobreak)",
+      "Bash(del:*)",
+      "Bash(dir:*)",
+      "Bash(python create_issues.py:*)",
+      "Bash(cat:*)",
+      "Bash(export PATH=$PATH:\"/c/Program Files/GitHub CLI\")",
+      "Bash(gh issue create:*)",
+      "Bash(gh project:*)",
+      "Bash(python setup_work_stream_field.py:*)",
+      "Bash(gh api:*)",
+      "Bash(bash:*)",
+      "Bash(gh issue view:*)",
+      "Bash(gh issue comment:*)",
+      "Bash(gh issue edit:*)",
+      "Bash(gh issue close:*)",
+      "Bash(gh issue reopen:*)",
+      "Bash(gh issue list:*)",
+      "Bash(gh label list:*)",
+      "Bash(for issue in 52 54 55 56 57 58 59 60 61 62)",
+      "Bash(do gh issue close $issue --repo Flotfyr2000/MugAIn --comment \"Closing sub-issue to start fresh with tech lead. Will recreate implementation tasks collaboratively.\")",
+      "Bash(done)",
+      "Bash(do gh issue close $issue --repo Flotfyr2000/MugAIn --reason \"not planned\")",
+      "Bash(do gh issue reopen $issue --repo Flotfyr2000/MugAIn)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
