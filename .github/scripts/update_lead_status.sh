@@ -14,6 +14,7 @@ DAYS_SINCE_CONTACT_FIELD_ID="PVTF_lAHODqcU-c4BK4nTzg71Gw4"
 CONTACT_STATUS_FIELD_ID="PVTSSF_lAHODqcU-c4BK4nTzg71Gzg"
 
 # Contact Status option IDs
+NOT_CONTACTED_ID="TBD"    # ⚪ Not Contacted (to be added manually)
 RECENT_ID="b9d7f8d1"      # 🟢 0-7 days
 WARM_ID="c750b183"        # 🟡 8-14 days
 COOLING_ID="e362fb41"     # 🟠 15-30 days
@@ -96,48 +97,52 @@ echo "$items" | jq -c '.' | while read -r item; do
   last_interaction=$(echo "$item" | jq -r '.fieldValues.nodes[] | select(.field.name == "Last Interaction") | .date // empty')
 
   if [ -z "$last_interaction" ]; then
-    echo "⚠️  #$issue_number: No Last Interaction date set - skipping"
-    continue
-  fi
-
-  # Calculate days since last interaction
-  last_interaction_seconds=$(date -d "$last_interaction" +%s 2>/dev/null || date -j -f "%Y-%m-%d" "$last_interaction" +%s 2>/dev/null)
-  days_diff=$(( (today - last_interaction_seconds) / 86400 ))
-
-  # Determine status based on days
-  if [ $days_diff -le 7 ]; then
-    status_id="$RECENT_ID"
-    status_name="🟢 Recent"
-  elif [ $days_diff -le 14 ]; then
-    status_id="$WARM_ID"
-    status_name="🟡 Warm"
-  elif [ $days_diff -le 30 ]; then
-    status_id="$COOLING_ID"
-    status_name="🟠 Cooling"
-  elif [ $days_diff -le 60 ]; then
-    status_id="$COLD_ID"
-    status_name="🔴 Cold"
-    needs_followup_count=$((needs_followup_count + 1))
+    echo "⚪ #$issue_number: No Last Interaction date - setting to Not Contacted"
+    status_id="$NOT_CONTACTED_ID"
+    status_name="⚪ Not Contacted"
+    days_diff=""
   else
-    status_id="$STALE_ID"
-    status_name="⚫ Stale"
-    needs_followup_count=$((needs_followup_count + 1))
+    # Calculate days since last interaction
+    last_interaction_seconds=$(date -d "$last_interaction" +%s 2>/dev/null || date -j -f "%Y-%m-%d" "$last_interaction" +%s 2>/dev/null)
+    days_diff=$(( (today - last_interaction_seconds) / 86400 ))
+
+    # Determine status based on days
+    if [ $days_diff -le 7 ]; then
+      status_id="$RECENT_ID"
+      status_name="🟢 Recent"
+    elif [ $days_diff -le 14 ]; then
+      status_id="$WARM_ID"
+      status_name="🟡 Warm"
+    elif [ $days_diff -le 30 ]; then
+      status_id="$COOLING_ID"
+      status_name="🟠 Cooling"
+    elif [ $days_diff -le 60 ]; then
+      status_id="$COLD_ID"
+      status_name="🔴 Cold"
+      needs_followup_count=$((needs_followup_count + 1))
+    else
+      status_id="$STALE_ID"
+      status_name="⚫ Stale"
+      needs_followup_count=$((needs_followup_count + 1))
+    fi
+
+    echo "📊 #$issue_number: $days_diff days → $status_name"
   fi
 
-  echo "📊 #$issue_number: $days_diff days → $status_name"
-
-  # Update Days Since Contact
-  gh api graphql -f query="
-    mutation {
-      updateProjectV2ItemFieldValue(input: {
-        projectId: \"$PROJECT_ID\"
-        itemId: \"$item_id\"
-        fieldId: \"$DAYS_SINCE_CONTACT_FIELD_ID\"
-        value: { number: $days_diff }
-      }) {
-        projectV2Item { id }
-      }
-    }" --silent
+  # Update Days Since Contact (only if we have a value)
+  if [ -n "$days_diff" ]; then
+    gh api graphql -f query="
+      mutation {
+        updateProjectV2ItemFieldValue(input: {
+          projectId: \"$PROJECT_ID\"
+          itemId: \"$item_id\"
+          fieldId: \"$DAYS_SINCE_CONTACT_FIELD_ID\"
+          value: { number: $days_diff }
+        }) {
+          projectV2Item { id }
+        }
+      }" --silent
+  fi
 
   # Update Contact Status
   gh api graphql -f query="
@@ -153,7 +158,7 @@ echo "$items" | jq -c '.' | while read -r item; do
     }" --silent
 
   # Add comment if cold/stale and no recent comment
-  if [ $days_diff -ge 31 ]; then
+  if [ -n "$days_diff" ] && [ $days_diff -ge 31 ]; then
     # Check if we already commented recently
     recent_comment=$(gh issue view $issue_number --repo Flotfyr2000/MugAIn --json comments --jq '.comments[-1].body // empty' | grep "⚠️ Follow-up needed" || echo "")
 

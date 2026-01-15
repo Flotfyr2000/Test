@@ -11,6 +11,7 @@ Every day at 5:00 AM, the GitHub Actions workflow:
 2. Calculates days since last interaction
 3. Updates "Days Since Contact" field
 4. Updates "Contact Status" with color-coded indicator:
+   - ⚪ **Not Contacted** - No Last Interaction date set yet
    - 🟢 **Recent** (0-7 days) - All good
    - 🟡 **Warm** (8-14 days) - Keep an eye on it
    - 🟠 **Cooling** (15-30 days) - Consider reaching out
@@ -44,6 +45,7 @@ When you contact a lead:
 Sort or filter your leads by Contact Status to prioritize follow-ups:
 
 ```
+⚪ Not Contacted        - Needs initial contact
 🟢 Recent (0-7 days)    - No action needed
 🟡 Warm (8-14 days)     - Monitor
 🟠 Cooling (15-30 days) - Consider outreach

@@ -50,20 +50,65 @@ When starting new session:
 
 **ALWAYS set custom fields after creating any GitHub issue:**
 
-Required fields: Work Stream, Priority, AI Generated
+Required fields: Type, Work Stream, Priority, AI Generated
 
 **Process:**
 1. Create issue via `gh issue create`
 2. Get project item ID via GraphQL
-3. Set all three custom fields via GraphQL mutations
+3. Set all four custom fields via GraphQL mutations
 
 **Technical IDs:**
 - Project ID: `PVT_kwHODqcU-c4BK4nT`
+- Type Field ID: `PVTSSF_lAHODqcU-c4BK4nTzg7x_qM`
+  - "Feature" option: `35f63a0a`
+  - "Lead" option: `28e866a9`
+  - "Bug" option: `694a9c34`
 - Work Stream Field ID: `PVTSSF_lAHODqcU-c4BK4nTzg7ZcR4`
 - Priority Field ID: (varies by option)
 - AI Generated Field ID: `PVTSSF_lAHODqcU-c4BK4nTzg7ZcR4`
   - "Yes" option: `d88cd6fa`
   - "Human Assessed" option: `674b8489`
+
+**Lead-Specific Fields:**
+- Pipeline Stage Field ID: `PVTSSF_lAHODqcU-c4BK4nTzg7yFU4`
+  - "Early Stage": `d98a6233`
+  - "Evaluation": `89ae9dd9`
+  - "Proposal Stage": `a001e2f8`
+  - "Compliance & Legal": `cc7edae9`
+  - "Closing": `22bb4eda`
+- Lead Stage Field ID: `PVTSSF_lAHODqcU-c4BK4nTzg7yFYs`
+  - "Prospecting": `207766dd`
+  - "Qualification": `db57fc96`
+  - "Discovery": `219127a5`
+  - "Demo/POC": `21998c80`
+  - "Proposal": `ec1ac579`
+  - "Negotiation": `fb3b5f53`
+  - "Legal & Compliance Review": `fe9136cd`
+  - "Closing": `5abbbc12`
+  - "Closed-Won": `e22c0b79`
+  - "Closed-Lost": `aeaa7827`
+  - "On Hold": `7c39d519`
+- Team Contact Field ID: `PVTSSF_lAHODqcU-c4BK4nTzg70_b8`
+  - "Phillip": `e342114b`
+  - "Jens": `51e94dae`
+  - "Michael": `9ccc0bba`
+- Last Interaction Field ID: `PVTF_lAHODqcU-c4BK4nTzg71GDE` (date)
+- Days Since Contact Field ID: `PVTF_lAHODqcU-c4BK4nTzg71Gw4` (number, auto-calculated)
+- Contact Status Field ID: `PVTSSF_lAHODqcU-c4BK4nTzg71Gzg`
+  - "🟢 Recent (0-7 days)": `b9d7f8d1`
+  - "🟡 Warm (8-14 days)": `c750b183`
+  - "🟠 Cooling (15-30 days)": `e362fb41`
+  - "🔴 Cold (31-60 days)": `2854a3ba`
+  - "⚫ Stale (60+ days)": `32d0d3a4`
+- Lead Value Field ID: `PVTF_lAHODqcU-c4BK4nTzg7yFao` (number)
+- Expected Close Date Field ID: `PVTF_lAHODqcU-c4BK4nTzg7yFbU` (date)
+- Contact Name Field ID: `PVTF_lAHODqcU-c4BK4nTzg7yFco` (text)
+- Company Field ID: `PVTF_lAHODqcU-c4BK4nTzg7yFes` (text)
+
+**Type Field:**
+- Feature: Product features and capabilities
+- Lead: Sales leads and business opportunities
+- Bug: Defects and issues
 
 **AI Generated Field:**
 - Default for new issues: "Yes" (AI created/refined)
