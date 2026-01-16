@@ -3,6 +3,40 @@
 ## Overview
 Automatically tracks and updates lead contact status to ensure timely follow-ups.
 
+## ⚠️ Setup Required Before First Use
+
+The automation requires a Personal Access Token (PAT) to access GitHub Projects API.
+
+### Step 1: Create Personal Access Token
+1. Go to **GitHub Settings** → **Developer settings** → [**Personal access tokens** → **Tokens (classic)**](https://github.com/settings/tokens)
+2. Click **Generate new token (classic)**
+3. Name: `Lead Tracking Automation`
+4. Expiration: Choose appropriate timeframe (recommend: No expiration for automation)
+5. Select scopes:
+   - ✅ `repo` (Full control of private repositories)
+   - ✅ `project` (Full control of projects)
+6. Click **Generate token**
+7. **⚠️ Copy the token immediately** (you won't see it again!)
+
+### Step 2: Add Token as Repository Secret
+1. Go to https://github.com/Flotfyr2000/Test
+2. Click **Settings** → **Secrets and variables** → **Actions**
+3. Click **New repository secret**
+4. Name: `GH_PAT`
+5. Value: Paste the token you copied in Step 1
+6. Click **Add secret**
+
+### Step 3: Test the Workflow
+1. Go to **Actions** tab: https://github.com/Flotfyr2000/Test/actions
+2. Click **Update Lead Contact Status** workflow
+3. Click **Run workflow** → **Run workflow**
+4. Wait 10-15 seconds for completion
+5. Check logs to verify success
+
+**Once the PAT is added, the automation will run automatically every day at 5:00 AM UTC.**
+
+---
+
 ## How It Works
 
 ### Automatic Daily Updates (5:00 AM UTC)
