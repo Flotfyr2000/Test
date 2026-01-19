@@ -105,6 +105,20 @@ Required fields: Type, Work Stream, Priority, AI Generated
 - Contact Name Field ID: `PVTF_lAHODqcU-c4BK4nTzg7yFco` (text)
 - Company Field ID: `PVTF_lAHODqcU-c4BK4nTzg7yFes` (text)
 
+**Bug-Specific Fields:**
+- Severity Field ID: `PVTSSF_lAHODqcU-c4BK4nTzg8FARQ`
+  - "Critical": `a8dc8552` (System down, data loss, security)
+  - "High": `09761a21` (Major feature broken, blocks work)
+  - "Medium": `b530362e` (Partial functionality, workaround exists)
+  - "Low": `61bfd82e` (Minor issue, cosmetic)
+- Bug Status Field ID: `PVTSSF_lAHODqcU-c4BK4nTzg8FAS4`
+  - "New": `029ef437` (Just reported)
+  - "Confirmed": `5e21ffc0` (Bug confirmed and prioritized)
+  - "In Progress": `fc1a5242` (Being worked on)
+  - "Fixed": `09c78f87` (Fix implemented, needs verification)
+  - "Verified": `d4c5f78e` (Fix verified, ready to close)
+  - "Closed": `7fbd56b5` (Resolved and closed)
+
 **Type Field:**
 - Feature: Product features and capabilities
 - Lead: Sales leads and business opportunities
