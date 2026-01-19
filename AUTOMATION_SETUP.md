@@ -10,16 +10,22 @@ This happens because the default `GITHUB_TOKEN` doesn't have permission to acces
 
 ## Fix: Add Personal Access Token (5 minutes)
 
-### 1. Create Token
-👉 Go to: https://github.com/settings/tokens
+### 1. Create Token (IMPORTANT: Use Fine-Grained Token)
+👉 Go to: https://github.com/settings/tokens?type=beta
 
-1. Click **Generate new token (classic)**
-2. Name: `Lead Tracking Automation`
-3. Check these boxes:
-   - ✅ `repo`
-   - ✅ `project`
-4. Click **Generate token**
-5. **Copy the token** (starts with `ghp_...`)
+1. Click **Generate new token** (fine-grained)
+2. Token name: `Lead Tracking Automation`
+3. Expiration: Choose timeframe (recommend: 90 days or 1 year)
+4. **Repository access**: Select "All repositories" (or select Flotfyr2000/Test specifically)
+5. **Permissions - Repository permissions**:
+   - ✅ Issues: Read and write
+   - ✅ Metadata: Read-only (auto-selected)
+6. **Permissions - Account permissions**:
+   - ✅ Projects: Read and write
+7. Click **Generate token**
+8. **Copy the token** (starts with `github_pat_...`)
+
+**Why fine-grained?** Classic tokens don't work with user-level Projects (the error you're seeing). Fine-grained tokens have proper project access.
 
 ### 2. Add to Repository
 👉 Go to: https://github.com/Flotfyr2000/Test/settings/secrets/actions
