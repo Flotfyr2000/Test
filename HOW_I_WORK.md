@@ -1,6 +1,27 @@
 # How I Work - Claude Code Session Guide
 
-**Last Updated:** 2026-01-09
+**Last Updated:** 2026-01-20
+
+---
+
+## Platform Structure
+
+**Tenant → Team → Chatbot Hierarchy:**
+- **Tenant:** Everyone in the same company (e.g., "Acme Pharma")
+- **Team:** Department/group (e.g., "Quality Team", "Production Team")
+  - **Admin role:** Can create and edit all chatbots in this team
+  - **Consumer role:** Can use all chatbots in this team
+- **Personal Team:** Each user's private workspace (only that user is member)
+- **Chatbot:** Belongs to ONE team
+
+**User Access:**
+- Users can belong to multiple teams
+- Always have a personal team (private workspace)
+- Can move chatbot from personal → production team (soft launch workflow)
+
+**Default Access Control:**
+- Team members can access all team chatbots
+- Non-members cannot see team chatbots (unless published to library or link-shared)
 
 ---
 
@@ -32,6 +53,31 @@
 - Discuss and iterate in chat FIRST before updating GitHub
 - Only update GitHub after content is finalized
 - Exception: Non-feature work defaults to immediate execution
+
+**Feature Titles (for Jens):**
+- Use clear, descriptive titles (not fancy/marketing language)
+- Use non-expert words that Jens (dev/tech lead) understands immediately
+- Bad: "🎨 Productivity Suite Orchestration"
+- Good: "🎨 HTML Apps for Custom Interfaces"
+- Focus on WHAT it is, not marketing fluff
+- Keep it simple and obvious
+
+**Feature Format (for Jens):**
+All features should follow this structure:
+
+1. **What I Want (PO Wish List)** - Plain language explanation
+2. **What It Should Do (MSP Capabilities)** - Checkable list items
+   - Use `- [ ]` checkbox format for all items
+   - Group by functionality sections
+   - Example: `- [ ] Button: "Select Agent" opens modal`
+3. **What's NOT in MSP** - Clear exclusions (future enhancements)
+4. **Success Looks Like** - Measurable outcomes
+5. **User Stories** - For reference
+6. **Development Checklist (For Jens)** - Checkable task list
+   - Organized by implementation area (UI, API, Logic, etc.)
+   - Each item is concrete and checkable
+   - Example: `- [ ] Create modal component`
+7. **Technical Notes** - Detailed implementation info
 
 ---
 
@@ -154,9 +200,39 @@ Required fields: Type, Work Stream, Priority, AI Generated
   ```
 - **Web UI:** Can change state reason directly
 
+### Managing Duplicate Issues
+
+**When closing duplicates, ALWAYS:**
+1. Add the "duplicate" label to the closed issue
+2. Close with explanation comment referencing the superseding issue
+3. Add a comment to the active issue linking back to the duplicate
+
+**Process:**
+```bash
+# Close duplicate with explanation
+gh issue close 25 --repo Owner/Repo --comment "Closing as duplicate of #77..."
+
+# Add duplicate label
+gh issue edit 25 --repo Owner/Repo --add-label "duplicate"
+
+# Link from active issue back to duplicate
+gh issue comment 77 --repo Owner/Repo --body "This issue supersedes and closes #25..."
+```
+
+**Why this matters:**
+- Creates clear audit trail showing issue relationships
+- GitHub UI shows "duplicate" badge on closed issue
+- Both issues link to each other for easy navigation
+- Future searches find both issues and understand the relationship
+
 ---
 
 ## Strategic Priorities
+
+**MSP Focus (Minimum Sellable Product):**
+- Currently building toward first sale, not just MVP
+- When discussing "next step" = what's needed to hit MSP
+- MSP features must be production-ready and customer-facing quality
 
 **Democratization & Scalability:**
 - Challenge: Training/implementation resources shouldn't bottleneck growth
