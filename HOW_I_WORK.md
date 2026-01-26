@@ -29,6 +29,14 @@
 
 **Work Streams** are ongoing categories; **Features** are finite deliverables.
 
+**Work Stream Emojis (ALWAYS use in feature titles):**
+- 🔍 Explainability & Quality
+- 🌐 Shareability (also 🏷️ 🤝)
+- 🔒 Security & Compliance
+- 🎯 Governance & Analytics (also 👥)
+- 🛠️ Tools & Capabilities (also ⚙️ 🔧 🧪 🔌 🎨 🔄)
+- 📚 Training
+
 **Priority Handling:**
 - Priority managed via GitHub Projects custom field (P0-P3)
 - Do NOT include priority in feature descriptions
@@ -94,14 +102,21 @@ When starting new session:
 
 ### Creating Issues - CRITICAL Custom Fields
 
-**ALWAYS set custom fields after creating any GitHub issue:**
+**MANDATORY: ALWAYS set these fields for EVERY new issue:**
 
-Required fields: Type, Work Stream, Priority, AI Generated
+1. **Type** (Feature/Lead/Bug)
+2. **Work Stream** (both label AND custom field)
+3. **Priority** (P0/P1/P2/P3 via custom field only)
+4. **AI Generated** (default: "Yes")
+5. **Work Stream Emoji** in title (based on work stream)
 
 **Process:**
-1. Create issue via `gh issue create`
-2. Get project item ID via GraphQL
-3. Set all four custom fields via GraphQL mutations
+1. Create issue via `gh issue create` with work stream emoji in title
+2. Add work stream label: `--label "stream: <work-stream-name>"`
+3. Get project item ID via GraphQL
+4. Set all four custom fields via GraphQL mutations
+
+**CRITICAL: Do NOT skip custom fields - every issue MUST have them set**
 
 **Technical IDs:**
 - Project ID: `PVT_kwHODqcU-c4BK4nT`
@@ -109,8 +124,20 @@ Required fields: Type, Work Stream, Priority, AI Generated
   - "Feature" option: `35f63a0a`
   - "Lead" option: `28e866a9`
   - "Bug" option: `694a9c34`
-- Work Stream Field ID: `PVTSSF_lAHODqcU-c4BK4nTzg7ZcR4`
-- Priority Field ID: (varies by option)
+- Work Stream Field ID: `PVTSSF_lAHODqcU-c4BK4nTzg6qWtU`
+  - "Explainability & Quality" option: `46814f4b`
+  - "Shareability" option: `5a710e08`
+  - "Security & Compliance" option: `5106af82`
+  - "Governance & Analytics" option: `14babdce`
+  - "Tools & Capabilities" option: `021a7ff2`
+  - "Training" option: `496ed69c`
+- Priority Field ID: `PVTSSF_lAHODqcU-c4BK4nTzg7WfgA`
+  - "P0 (MSP)" option: `09a08e69`
+  - "MSP Not discussed" option: `a5413f21`
+  - "P1" option: `5415ad99`
+  - "P1 Not Discussed" option: `9d161555`
+  - "P2" option: `a89c3eb4`
+  - "P3" option: `42f6c7da`
 - AI Generated Field ID: `PVTSSF_lAHODqcU-c4BK4nTzg7ZcR4`
   - "Yes" option: `d88cd6fa`
   - "Human Assessed" option: `674b8489`
@@ -174,6 +201,39 @@ Required fields: Type, Work Stream, Priority, AI Generated
 - Default for new issues: "Yes" (AI created/refined)
 - User changes to "Human Assessed" when reviewed
 - AI should NEVER change back to "Yes" unless explicitly instructed
+
+**Example: Creating a Feature Issue**
+```bash
+# 1. Create issue with emoji and work stream label
+gh issue create --repo Flotfyr2000/MugAIn \
+  --title "🛠️ New Cool Feature" \
+  --body "..." \
+  --label "stream: tools-capabilities"
+
+# 2. Get project item ID
+gh api graphql -f query='...' # Returns item ID
+
+# 3. Set Type = Feature
+gh api graphql -f query='mutation { updateProjectV2ItemFieldValue(...) }'
+
+# 4. Set Work Stream = Tools & Capabilities
+gh api graphql -f query='mutation { updateProjectV2ItemFieldValue(
+  fieldId: "PVTSSF_lAHODqcU-c4BK4nTzg6qWtU"
+  value: {singleSelectOptionId: "021a7ff2"}
+) }'
+
+# 5. Set Priority = P1
+gh api graphql -f query='mutation { updateProjectV2ItemFieldValue(
+  fieldId: "PVTSSF_lAHODqcU-c4BK4nTzg7WfgA"
+  value: {singleSelectOptionId: "5415ad99"}
+) }'
+
+# 6. Set AI Generated = Yes
+gh api graphql -f query='mutation { updateProjectV2ItemFieldValue(
+  fieldId: "PVTSSF_lAHODqcU-c4BK4nTzg7ZcR4"
+  value: {singleSelectOptionId: "d88cd6fa"}
+) }'
+```
 
 ### Sub-Issues
 
