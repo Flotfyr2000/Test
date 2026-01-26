@@ -29,12 +29,12 @@
 
 **Work Streams** are ongoing categories; **Features** are finite deliverables.
 
-**Work Stream Emojis (ALWAYS use in feature titles):**
+**Work Stream Emojis (ALWAYS use in feature titles - ONE per work stream):**
 - 🔍 Explainability & Quality
-- 🌐 Shareability (also 🏷️ 🤝)
+- 🌐 Shareability
 - 🔒 Security & Compliance
-- 🎯 Governance & Analytics (also 👥)
-- 🛠️ Tools & Capabilities (also ⚙️ 🔧 🧪 🔌 🎨 🔄)
+- 🎯 Governance & Analytics
+- 🛠️ Tools & Capabilities
 - 📚 Training
 
 **Priority Handling:**
@@ -74,10 +74,12 @@
 All features should follow this structure:
 
 1. **What I Want (PO Wish List)** - Plain language explanation
-2. **What It Should Do (MSP Capabilities)** - Checkable list items
+2. **What It Should Do (MSP Acceptance Criteria)** - Checkable list items
+   - This is the acceptance criteria - what defines "done"
    - Use `- [ ]` checkbox format for all items
    - Group by functionality sections
    - Example: `- [ ] Button: "Select Agent" opens modal`
+   - These are testable requirements from user perspective
 3. **What's NOT in MSP** - Clear exclusions (future enhancements)
 4. **Success Looks Like** - Measurable outcomes
 5. **User Stories** - For reference
@@ -85,6 +87,7 @@ All features should follow this structure:
    - Organized by implementation area (UI, API, Logic, etc.)
    - Each item is concrete and checkable
    - Example: `- [ ] Create modal component`
+   - These are technical implementation tasks
 7. **Technical Notes** - Detailed implementation info
 
 ---
