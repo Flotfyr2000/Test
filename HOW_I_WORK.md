@@ -110,7 +110,7 @@ When starting new session:
 1. **Type** (Feature/Lead/Bug)
 2. **Work Stream** (both label AND custom field)
 3. **Priority** (P0/P1/P2/P3 via custom field only)
-4. **AI Generated** (default: "Yes")
+4. **Feature Maturity** (default: "Idea")
 5. **Work Stream Emoji** in title (based on work stream)
 
 **Process:**
@@ -141,9 +141,10 @@ When starting new session:
   - "P1 Not Discussed" option: `9d161555`
   - "P2" option: `a89c3eb4`
   - "P3" option: `42f6c7da`
-- AI Generated Field ID: `PVTSSF_lAHODqcU-c4BK4nTzg7ZcR4`
-  - "Yes" option: `d88cd6fa`
-  - "Human Assessed" option: `674b8489`
+- Feature Maturity Field ID: `PVTSSF_lAHODqcU-c4BK4nTzg7ZcR4`
+  - "Idea" option: `d88cd6fa` (default for new features)
+  - "Ready for Tech" option: `674b8489` (PO has reviewed and refined)
+  - "Ready for Work" option: (needs to be added manually in GitHub UI)
 
 **Lead-Specific Fields:**
 - Pipeline Stage Field ID: `PVTSSF_lAHODqcU-c4BK4nTzg7yFU4`
@@ -200,10 +201,11 @@ When starting new session:
 - Lead: Sales leads and business opportunities
 - Bug: Defects and issues
 
-**AI Generated Field:**
-- Default for new issues: "Yes" (AI created/refined)
-- User changes to "Human Assessed" when reviewed
-- AI should NEVER change back to "Yes" unless explicitly instructed
+**Feature Maturity Field:**
+- Default for new features: "Idea" (initial PO wishes)
+- Changes to "Ready for Tech" after PO review and refinement
+- Changes to "Ready for Work" after tech lead approves approach
+- AI creates features at "Idea" maturity by default
 
 **Example: Creating a Feature Issue**
 ```bash
@@ -231,7 +233,7 @@ gh api graphql -f query='mutation { updateProjectV2ItemFieldValue(
   value: {singleSelectOptionId: "5415ad99"}
 ) }'
 
-# 6. Set AI Generated = Yes
+# 6. Set Feature Maturity = Idea
 gh api graphql -f query='mutation { updateProjectV2ItemFieldValue(
   fieldId: "PVTSSF_lAHODqcU-c4BK4nTzg7ZcR4"
   value: {singleSelectOptionId: "d88cd6fa"}
